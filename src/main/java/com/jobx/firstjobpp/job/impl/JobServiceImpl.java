@@ -27,14 +27,26 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<Job> findAll() {
         //return jobs;
-        return jobRepository.findAll();
+        try{
+            return jobRepository.findAll();
+        }catch (Exception e){
+            log.warn("Error while searching for jobs: ", e);
+            return null;
+        }
     }
 
     @Override
     public void createJob(Job job) {
-        job.setJobSeq(seq.getNextSeq());
-        //jobs.add(job);
-        jobRepository.save(job);
+
+        if(job != null)
+        {
+            job.setJobSeq(seq.getNextSeq());
+            //jobs.add(job);
+            jobRepository.save(job);
+        }else{
+            return;
+        }
+
     }
 
     @Override
@@ -65,8 +77,12 @@ public class JobServiceImpl implements JobService {
 //        }
 //        return false;
         try {
-            jobRepository.deleteById(jobSeq);
-            return true;
+            if(jobRepository.existsById(jobSeq)){
+                jobRepository.deleteById(jobSeq);
+                return true;
+            }
+            log.warn("Job with ID {} not found.", jobSeq);
+            return false;
         } catch (Exception e) {
             log.error("Error in deleting job: ", e);
             return false;

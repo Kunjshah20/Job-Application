@@ -8,4 +8,6 @@ public interface ReviewService {
 
     List<Review> getAllReviews(Long companySeq);
 
+    boolean addReview(Long companySeq, Review review);
+
 }

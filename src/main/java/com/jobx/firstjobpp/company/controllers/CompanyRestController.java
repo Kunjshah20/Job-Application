@@ -60,4 +60,15 @@ public class CompanyRestController {
         return new ResponseEntity<>(new ApiResponse<>("Company do not exist with seq: " + companySeq + " that can be deleted.", null), HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/{companySeq}")
+    public ResponseEntity<ApiResponse<Company>> getJobBySeq(@PathVariable Long companySeq){
+
+        Company company = companyService.getCompanyById(companySeq);
+        if(company != null)
+        {
+            return new ResponseEntity<>(new ApiResponse<>("Job found Successfully", company), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ApiResponse<>("Job Portal do not have any job with seq: " + companySeq, null),HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -55,7 +55,7 @@ public class JobRestController {
         {
             return new ResponseEntity<>("Job Deleted Successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Job you're searching for, does not exist", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Job Portal do not have any job with seq: " + jobSeq + " that can be deleted.", HttpStatus.NOT_FOUND);
     }
 
     //@PutMapping("/jobs/{jobSeq}")
@@ -68,7 +68,18 @@ public class JobRestController {
         {
             return new ResponseEntity<>("Job Updated Successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Job you're searching for, does not exist", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Job Portal do not have any job with seq: " + jobSeq + " that can be updated.", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllJobs(){
+        boolean deleted = jobService.deleteAll();
+
+        if(deleted)
+        {
+            return new ResponseEntity<>("All Jobs Deleted Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Job Portal do not have any active jobs for deletion.", HttpStatus.NOT_FOUND);
     }
 
 }

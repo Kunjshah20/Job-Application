@@ -15,4 +15,6 @@ public interface JobService {
     boolean deleteJobById(Long jobSeq);
 
     boolean updateJob(Long jobSeq, Job job);
+
+    boolean deleteAll();
 }

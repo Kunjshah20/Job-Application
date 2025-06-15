@@ -1,7 +1,14 @@
 package com.jobx.firstjobpp.job.dataobjects;
 
+import jakarta.persistence.*;
+
+@Entity // tell spring boot to create table in database of this class
+@Table (name = "job") // tell spring boot the name of table or else it will take name of this class
 public class Job {
 
+    @Id // tell spring boot this field is primary key of table
+    // @GeneratedValue(strategy = GenerationType.IDENTITY) // tell Spring boot to auto generate Sequence
+    // commented auto generate sequence as of now , as I'm using singleton class of sequence generator
     private Long jobSeq;
 
     private String title;
@@ -13,6 +20,10 @@ public class Job {
     private String maxSalary;
 
     private String location;
+
+    // created default constructor as entities are objects in relational database and this is a requirement for JPA
+    // JPA uses reflection for persistance of entities
+    public Job(){}
 
     public Job(Long jobSeq, String title, String description, String minSalary, String maxSalary, String location) {
         this.jobSeq = jobSeq;

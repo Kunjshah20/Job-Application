@@ -49,4 +49,15 @@ public class CompanyRestController {
         return new ResponseEntity<>(new ApiResponse<>("Company Not Added", null), HttpStatus.NOT_FOUND);
     }
 
+    @DeleteMapping("/{companySeq}")
+    public ResponseEntity<ApiResponse<String>> deleteJob(@PathVariable Long companySeq){
+        boolean deleted = companyService.deleteCompanyById(companySeq);
+
+        if(deleted)
+        {
+            return new ResponseEntity<>(new ApiResponse<>("Company Deleted Successfully", "Company having sequence: " + companySeq + " is deleted"), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ApiResponse<>("Company do not exist with seq: " + companySeq + " that can be deleted.", null), HttpStatus.NOT_FOUND);
+    }
+
 }

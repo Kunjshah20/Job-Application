@@ -40,4 +40,13 @@ public class CompanyRestController {
         return new ResponseEntity<>(new ApiResponse<>("Company doesn't exist with seq: " + companySeq + " that can be updated.", ""), HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping
+    public ResponseEntity<ApiResponse<Company>> createJob(@RequestBody Company company){
+        if(company != null){
+            companyService.createCompany(company);
+            return new ResponseEntity<>(new ApiResponse<>("Company Added Successfully", company), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new ApiResponse<>("Company Not Added", null), HttpStatus.NOT_FOUND);
+    }
+
 }

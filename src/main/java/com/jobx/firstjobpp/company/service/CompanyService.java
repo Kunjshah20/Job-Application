@@ -8,4 +8,6 @@ public interface CompanyService {
     List<Company> getAllCompanies();
 
     boolean updateCompany(Long companySeq, Company updatedCompany);
+
+    void createCompany(Company company);
 }

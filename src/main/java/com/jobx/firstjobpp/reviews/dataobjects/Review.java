@@ -1,5 +1,7 @@
 package com.jobx.firstjobpp.reviews.dataobjects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jobx.firstjobpp.company.dataobjects.Company;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,10 @@ public class Review {
     private String description;
 
     private Double rating;
+
+    @JsonIgnore
+    @ManyToOne
+    private Company company;
 
     public Review(){}
 
@@ -48,5 +54,13 @@ public class Review {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

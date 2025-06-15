@@ -2,6 +2,7 @@ package com.jobx.firstjobpp.company.dataobjects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jobx.firstjobpp.job.dataobjects.Job;
+import com.jobx.firstjobpp.reviews.dataobjects.Review;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class Company {
     @JsonIgnore
     @OneToMany(mappedBy = "company") // mapped by field company defined in Job Table
     private List<Job> jobs;
+
+    @OneToMany(mappedBy = "company") // mapped by field company defined in Review Table
+    private List<Review> reviews;
 
     // default constructor for JPA
     public Company(){}
@@ -55,5 +59,13 @@ public class Company {
 
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

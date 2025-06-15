@@ -1,5 +1,7 @@
 package com.jobx.firstjobpp.job.impl;
 
+import com.jobx.firstjobpp.company.dataobjects.Company;
+import com.jobx.firstjobpp.company.repositories.CompanyRepository;
 import com.jobx.firstjobpp.job.dataobjects.Job;
 import com.jobx.firstjobpp.job.JobSequenceGenerator;
 import com.jobx.firstjobpp.job.repositories.JobRepository;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -20,8 +23,11 @@ public class JobServiceImpl implements JobService {
     JobRepository jobRepository;
     JobSequenceGenerator seq = JobSequenceGenerator.getInstance();
 
-    public JobServiceImpl(JobRepository jobRepository) {
+    CompanyRepository companyRepository;
+
+    public JobServiceImpl(JobRepository jobRepository, CompanyRepository companyRepository) {
         this.jobRepository = jobRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override
@@ -36,17 +42,20 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void createJob(Job job) {
+    public Job createJob(Job job) {
 
-        if(job != null)
-        {
-            job.setJobSeq(seq.getNextSeq());
-            //jobs.add(job);
-            jobRepository.save(job);
-        }else{
-            return;
+        if (job == null || job.getCompany() == null || job.getCompany().getCompanySeq() == null) {
+            return null;
         }
 
+        Optional<Company> companyOptional = companyRepository.findById(job.getCompany().getCompanySeq());
+        if (companyOptional.isPresent()) {
+            job.setJobSeq(seq.getNextSeq());
+            job.setCompany(companyOptional.get());
+            return jobRepository.save(job);
+        }
+
+        return null; // company not found
     }
 
     @Override

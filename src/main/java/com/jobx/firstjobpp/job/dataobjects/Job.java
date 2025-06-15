@@ -1,5 +1,6 @@
 package com.jobx.firstjobpp.job.dataobjects;
 
+import com.jobx.firstjobpp.company.dataobjects.Company;
 import jakarta.persistence.*;
 
 @Entity // tell spring boot to create table in database of this class
@@ -21,17 +22,21 @@ public class Job {
 
     private String location;
 
+    @ManyToOne
+    private Company company;
+
     // created default constructor as entities are objects in relational database and this is a requirement for JPA
     // JPA uses reflection for persistance of entities
     public Job(){}
 
-    public Job(Long jobSeq, String title, String description, String minSalary, String maxSalary, String location) {
+    public Job(Long jobSeq, String title, String description, String minSalary, String maxSalary, String location, Company company) {
         this.jobSeq = jobSeq;
         this.title = title;
         this.description = description;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.location = location;
+        this.company = company;
     }
 
     public Long getJobSeq() {
@@ -80,5 +85,13 @@ public class Job {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

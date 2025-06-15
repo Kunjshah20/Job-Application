@@ -35,9 +35,13 @@ public class JobRestController {
     //@PostMapping("/jobs")
     @PostMapping
     public ResponseEntity<ApiResponse<Job>> createJob(@RequestBody Job job){
-        if(job != null){
-            jobService.createJob(job);
-            return new ResponseEntity<>(new ApiResponse<>("Job Added Successfully", job), HttpStatus.CREATED);
+        if(job != null && job.getCompany() != null && job.getCompany().getCompanySeq() != null){
+            Job savedJob = jobService.createJob(job);
+            if (savedJob != null) {
+                return new ResponseEntity<>(new ApiResponse<>("Job Added Successfully", savedJob), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(new ApiResponse<>("Company Not Found", null), HttpStatus.BAD_REQUEST);
+            }
         }
         return new ResponseEntity<>(new ApiResponse<>("Job Not Added", null), HttpStatus.NOT_FOUND);
     }

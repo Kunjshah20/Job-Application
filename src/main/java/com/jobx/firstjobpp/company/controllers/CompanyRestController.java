@@ -3,7 +3,6 @@ package com.jobx.firstjobpp.company.controllers;
 import com.jobx.firstjobpp.company.dataobjects.Company;
 import com.jobx.firstjobpp.company.service.CompanyService;
 import com.jobx.firstjobpp.helper.ApiResponse;
-import com.jobx.firstjobpp.job.dataobjects.Job;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyRestController {
 
-    private CompanyService companyService;
+    private final CompanyService companyService;
 
     public CompanyRestController(CompanyService companyService) {
         this.companyService = companyService;

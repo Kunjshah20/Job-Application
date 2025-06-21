@@ -58,4 +58,15 @@ public class ReviewRestController {
         }
         return new ResponseEntity<>(new ApiResponse<>("Review not updated", null), HttpStatus.NOT_FOUND);
     }
+
+    @DeleteMapping("/reviews/{reviewSeq}")
+    public ResponseEntity<ApiResponse<String>> deleteReview (@PathVariable Long companySeq, @PathVariable Long reviewSeq)
+    {
+        boolean isReviewDeleted = reviewService.deleteSingleReview(companySeq, reviewSeq);
+        if(isReviewDeleted)
+        {
+            return new ResponseEntity<>(new ApiResponse<>("Review deleted successfully", ""), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ApiResponse<>("Review not deleted", null), HttpStatus.NOT_FOUND);
+    }
 }

@@ -14,4 +14,5 @@ public interface ReviewService {
 
     boolean updateSingleReview(Long companySeq, Long reviewSeq, Review updatedReview);
 
+    boolean deleteSingleReview(Long companySeq, Long reviewSeq);
 }

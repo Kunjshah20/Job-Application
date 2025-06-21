@@ -47,4 +47,15 @@ public class ReviewRestController {
         }
         return new ResponseEntity<>(new ApiResponse<>("Review not found.", null), HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/reviews/{reviewSeq}")
+    public ResponseEntity<ApiResponse<String>> updateSingleReviewForCompanyId(@PathVariable Long companySeq, @PathVariable Long reviewSeq, @RequestBody Review updatedReview)
+    {
+        boolean isReviewUpdated = reviewService.updateSingleReview(companySeq, reviewSeq, updatedReview);
+        if(isReviewUpdated)
+        {
+            return new ResponseEntity<>(new ApiResponse<>("Review updated successfully", ""), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ApiResponse<>("Review not updated", null), HttpStatus.NOT_FOUND);
+    }
 }

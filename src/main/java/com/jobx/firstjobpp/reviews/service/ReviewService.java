@@ -12,4 +12,6 @@ public interface ReviewService {
 
     Review getSingleReview(Long companySeq, Long reviewSeq);
 
+    boolean updateSingleReview(Long companySeq, Long reviewSeq, Review updatedReview);
+
 }

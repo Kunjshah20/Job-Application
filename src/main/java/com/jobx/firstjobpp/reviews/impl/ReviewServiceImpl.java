@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -51,5 +52,22 @@ public class ReviewServiceImpl implements ReviewService {
                 .filter(review -> review.getReviewSeq().equals(reviewSeq))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public boolean updateSingleReview(Long companySeq, Long reviewSeq, Review updatedReview)
+    {
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewSeq);
+        if(companyService.getCompanyById(companySeq) != null && reviewOptional.isPresent())
+        {
+            Review review = reviewOptional.get();
+            review.setCompany(companyService.getCompanyById(companySeq));
+            review.setTitle(updatedReview.getTitle());
+            review.setDescription(updatedReview.getDescription());
+            review.setRating(updatedReview.getRating());
+            reviewRepository.save(review);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -43,4 +43,13 @@ public class ReviewServiceImpl implements ReviewService {
         }
         return false;
     }
+
+    @Override
+    public Review getSingleReview(Long companySeq, Long reviewSeq) {
+        List<Review> reviews = getAllReviews(companySeq);
+        return reviews.stream()
+                .filter(review -> review.getReviewSeq().equals(reviewSeq))
+                .findFirst()
+                .orElse(null);
+    }
 }

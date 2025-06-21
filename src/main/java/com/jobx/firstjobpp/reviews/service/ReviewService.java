@@ -10,4 +10,6 @@ public interface ReviewService {
 
     boolean addReview(Long companySeq, Review review);
 
+    Review getSingleReview(Long companySeq, Long reviewSeq);
+
 }

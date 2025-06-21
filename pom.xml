@@ -61,6 +61,8 @@
 
 	<build>
 		<plugins>
+			<!-- By using this plugin, we don't have to create different docker file
+					to containerize the app. -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
